@@ -1,0 +1,2 @@
+org.xwiki.contrib.xambox.internal.DefaultXamboxConnector
+org.xwiki.contrib.xambox.internal.XamboxConnectorScriptService
