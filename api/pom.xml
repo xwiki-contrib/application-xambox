@@ -24,14 +24,24 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.xwiki.contrib.xambox</groupId>
-  <artifactId>xwiki-xambox-api</artifactId>
-  <version>4.5.3</version>
-  <name>XWiki Connector - Xambox Connector</name>
-  <description>XWiki Connector - Xambox Connector</description>
-  <properties>
-    <commons.version>4.5.3</commons.version>
-  </properties>
+  <parent>
+   <groupId>org.xwiki.contrib</groupId>
+   <artifactId>application-xambox-parent</artifactId>
+   <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.xwiki.contrib</groupId>
+  <artifactId>application-xambox-api</artifactId>
+  <name>File Manager Xambox Connector API</name>
+  <version>1.0-SNAPSHOT</version>
+  <description>
+    API for the Xambox Connector Extension to the File Manager Application, allowing to interact with the Xambox Anywhere service.
+  </description>
+  <developers>
+    <developer>
+      <id>ldubost</id>
+      <name>Ludovic Dubost</name>
+    </developer>
+  </developers>
   <build>
     <plugins>
       <plugin>
