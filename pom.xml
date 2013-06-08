@@ -33,7 +33,7 @@
   <artifactId>application-xambox-parent</artifactId>
   <packaging>pom</packaging>
   <name>File Manager Xambox Connector Parent</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>
     Extension to the File Manager Application allowing to connect to the Xambox Anywhere service (http://www.xambox.com). It allows to import files from the Xambox Service into the File Manager application and link File Manager entries to other wiki pages using the File Manager Macro.
   </description>
@@ -51,7 +51,7 @@
    <connection>scm:git:git://github.com/xwiki-contrib/application-xambox.git</connection>
    <developerConnection>scm:git:git@github.com:xwiki-contrib/application-xambox.git</developerConnection>
    <url>https://github.com/xwiki-contrib/application-xambox</url>
-   <tag>application-xambox-1.0</tag>
+   <tag>HEAD</tag>
   </scm>
  <distributionManagement>
    <repository>
