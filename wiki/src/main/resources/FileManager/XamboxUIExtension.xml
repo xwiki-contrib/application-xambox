@@ -108,5 +108,5 @@
       <scope>wiki</scope>
     </property>
   </object>
-  <content/>
+  <content>{{include document="XWiki.UIExtensionSheet" /}}</content>
 </xwikidoc>
