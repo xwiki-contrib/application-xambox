@@ -27,13 +27,13 @@
   <parent>
    <groupId>org.xwiki.contrib</groupId>
    <artifactId>application-xambox-parent</artifactId>
-   <version>1.0-SNAPSHOT</version>
+   <version>1.0.1</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>application-xambox</artifactId>
   <packaging>xar</packaging>
   <name>File Manager Xambox Connector</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
   <description>
     Extension to the File Manager Application allowing to connect to the Xambox Anywhere service (http://www.xambox.com). It allows to import files from the Xambox Service into the File Manager application and link File Manager entries to other wiki pages using the File Manager Macro.
   </description>

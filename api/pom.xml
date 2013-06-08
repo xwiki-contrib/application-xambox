@@ -27,12 +27,12 @@
   <parent>
    <groupId>org.xwiki.contrib</groupId>
    <artifactId>application-xambox-parent</artifactId>
-   <version>1.0-SNAPSHOT</version>
+   <version>1.0.1</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>application-xambox-api</artifactId>
   <name>File Manager Xambox Connector API</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
   <description>
     API for the Xambox Connector Extension to the File Manager Application, allowing to interact with the Xambox Anywhere service.
   </description>
