@@ -50,7 +50,7 @@
   <scm>
    <connection>scm:git:git://github.com/xwiki-contrib/application-xambox.git</connection>
    <developerConnection>scm:git:git@github.com:xwiki-contrib/application-xambox.git</developerConnection>
-   <url>https://github.com/xwiki-contrib/application-xambox</url>
+   <url>https://github.com/xwiki-contrib/application-xambox/tree/master</url>
    <tag>HEAD</tag>
   </scm>
  <distributionManagement>
