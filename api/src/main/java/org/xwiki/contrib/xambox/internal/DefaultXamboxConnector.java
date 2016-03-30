@@ -67,6 +67,8 @@ import org.apache.http.conn.scheme.*;
 import org.apache.http.impl.conn.tsccm.*;
 import org.apache.http.conn.ssl.*;
 
+import org.slf4j.Logger;
+
 /**
  * Implementation of a <tt>HelloWorld</tt> component.
  */
@@ -74,6 +76,12 @@ import org.apache.http.conn.ssl.*;
 @InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
 public class DefaultXamboxConnector implements XamboxConnector, Initializable
 {
+    /**
+     * The logger to log.
+     */
+    @Inject
+    private Logger logger;
+
     /**
      * <p>
      * The XWiki component manager that is used to lookup XWiki components and context.
@@ -163,14 +171,14 @@ public class DefaultXamboxConnector implements XamboxConnector, Initializable
         XWikiDocument configDoc = getConfigDocument(context);
         BaseObject configObj = configDoc.getObject(CONFIG_CLASS);
         String prop = configObj.getStringValue(name);
-        System.out.println("Config from object " + name + " is " + prop);
+        logger.debug("Config from object " + name + " is " + prop);
         if (prop==null || prop.equals("")) {
             prop = configuration.getProperty(CONFIG_PREFIX + name);
-            System.out.println("Config from props " + name + " is " + prop);
+            logger.debug("Config from props " + name + " is " + prop);
         }
         if (prop==null || prop.equals("")) {
             prop = defaultValue;    
-            System.out.println("Config from default " + name + " is " + prop);
+            logger.debug("Config from default " + name + " is " + prop);
         }
         return prop;
         } catch (Exception e) {
@@ -261,7 +269,7 @@ public class DefaultXamboxConnector implements XamboxConnector, Initializable
     {
         String documentsUri = getURI(DOCUMENTS_URI).replaceAll("\\{query\\}", URLEncoder.encode(query)).replaceAll("\\{offset\\}", "" + offset).replaceAll("\\{limit\\}", "" + limit);
         String result = executeGetRequest(documentsUri);
-        
+
         org.w3c.dom.Document xdoc = parseXML(result);
         NodeList nodeList = xdoc.getElementsByTagName("GetDocumentSearch");
         ArrayList<XamboxDocumentSearchResult> list = new ArrayList<XamboxDocumentSearchResult>();
@@ -276,16 +284,17 @@ public class DefaultXamboxConnector implements XamboxConnector, Initializable
     {
         String documentUri = getURI(DOCUMENT_URI).replaceAll("\\{pid\\}", URLEncoder.encode(pid));
         String result = executeGetRequest(documentUri);
-        
+
         org.w3c.dom.Document xdoc = parseXML(result);
-        
+
         if (xdoc==null)
              return null;
-        
+
         return new XamboxDocument((Element) xdoc.getFirstChild());
     }
     
     public org.w3c.dom.Document parseXML(String xml) {
+        logger.debug("XML to parse: " + xml);
         LSInput input = this.lsImpl.createLSInput();
         input.setCharacterStream(new StringReader(xml)); 
         return XMLUtils.parse(input);
@@ -381,8 +390,9 @@ public class DefaultXamboxConnector implements XamboxConnector, Initializable
             mydoc.set("locLowDivider", xdoc.getLocLowDivider());
                        
             // transform folders into tags
-            mydoc.use(mydoc.newObject("XWiki.TagClass"));
-            mydoc.set("tags", getFolders());
+            // TODO: fix this as we need to get the nice folder names, for now commenting it
+            // mydoc.use(mydoc.newObject("XWiki.TagClass"));
+            // mydoc.set("tags", xdoc.getFolders());
  
             mydoc.use(mydoc.newObject("XWiki.DocumentSheetBinding"));
             mydoc.set("sheet", "FileManager.XamboxDocumentSheet");

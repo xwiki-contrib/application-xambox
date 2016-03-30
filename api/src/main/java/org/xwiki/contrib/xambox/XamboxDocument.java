@@ -45,6 +45,7 @@ public class XamboxDocument extends XamboxDocumentSearchResult
     protected String contentUrl = "";
     protected ArrayList<String> pagesUrl = new ArrayList<String>();
 
+    protected ArrayList<String> folders = new ArrayList<String>();
     protected int sheetsCount = 0;
     protected int nonBlankPagesCount = 0;
     protected String seriesName = "";
@@ -91,6 +92,11 @@ public class XamboxDocument extends XamboxDocumentSearchResult
             String pageUrl = getChildElement(((Element)pagesUrlNode.item(i)), "string");
             pagesUrl.add(pageUrl);
         }       
+        NodeList foldersNode = element.getElementsByTagName(("GETDocumentFolders"));
+        for (int i=0;i<foldersNode.getLength();i++) {
+            String folderName = getChildElement(((Element)foldersNode.item(i)), "name");
+            folders.add(folderName);
+        }
     }
     
     public String getNote()
@@ -212,7 +218,15 @@ public class XamboxDocument extends XamboxDocumentSearchResult
     {
         this.pagesUrl = pagesUrl;
     }
-      
- 
-   
+
+    public ArrayList<String> getFolders()
+    {
+        return folders;
+    }
+
+    public void setFolders(ArrayList<String> folders)
+    {
+        this.folders = folders;
+    }
+
 }
