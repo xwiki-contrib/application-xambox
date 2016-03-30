@@ -84,17 +84,36 @@ for (item in list) {
  def xdoc = null;
  def wiki = "";
 
- def result = xwiki.searchDocuments(", BaseObject as obj, StringProperty as prop where doc.fullName=obj.name and obj.className='FileManager.XamboxDocumentClass' and obj.id=prop.id.id and prop.id.name='pid' and prop.value='${pid}'")
- if (result!=null &amp;&amp; result.size()&gt;0) {
-   def fdocname = result.getAt(0);
+ // find the proper search engine
+ def searchConfigDoc = xwiki.getDocument("XWiki.SearchConfig")
+ def searchEngine = searchConfigDoc.getValue("engine")
+ if (searchEngine==null || searchEngine=="")
+  searchEngine = "solr";
+
+ if (searchEngine=="lucene") {
+  def result = xwiki.lucene.getSearchResults("FileManager.XamboxDocumentClass.pid:${pid}", "")
+  if (result!=null &amp;&amp; result.getHitcount()&gt;0) {
+   def ldoc = result.getResults(1,1).get(0);
+   def fdocname = ldoc.getWiki() + ":" + ldoc.getFullName()
    xdoc = xwiki.getDocument(fdocname)
+   wiki = ldoc.getWiki();
+  }
+ } else {
+  def queryStatement = "property.FileManager.XamboxDocumentClass.pid:${pid}"
+  def query = services.query.createQuery(queryStatement, 'solr')
+  def searchResponse = query.execute()[0].results
+  if (searchResponse.size()&gt;0) {
+   wiki = searchResponse[0].wiki
+   def fdocname = "" + searchResponse[0].wiki + ":" + searchResponse[0].fullname
+   xdoc = xwiki.getDocument(fdocname)
+  }
  }
 
  if (xdoc==null) {
    def stitle = escapetool.xml(item.title)
    println """Document not synced (${item.processingStatus}): &lt;input type="checkbox" name="pid" value="${item.pid}" /&gt; Title: &lt;input type="text" name="title_${item.pid}" value="${stitle}" size="60" /&gt; Link to page: &lt;input type="text" name="page_${item.pid}" value="" class="suggestDocuments" size="60" /&gt;&lt;br /&gt;"""
  } else {
-   println """Document already synced: [[${xdoc.title}&gt;&gt;${xdoc.fullName}]]&lt;br /&gt;"""
+   println """Document already synced: [[${xdoc.title}&gt;&gt;${wiki}:${xdoc.fullName}]]&lt;br /&gt;"""
  }
 } 
 println """
